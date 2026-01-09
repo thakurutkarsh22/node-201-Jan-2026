@@ -4,13 +4,14 @@ const HomeRouter = require('./Routes/HomeRoute');
 const PORT = 8089;
 
 const server = express();
+require('dotenv').config()
 
 
 // for home page ONLY get req is allowed
 // this is a HANDLER function - handles the incoming request and sends response
 server.use("/", HomeRouter)
 
-server.get("/fitness", (req, res) => {
+server.get("/fitness", (req, res, next) => {
     const fitnessInfo = {
         name: "John Doe express",
         age: 30,

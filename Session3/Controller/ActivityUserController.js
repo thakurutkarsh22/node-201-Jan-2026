@@ -2,11 +2,11 @@ const userData = require("../userData");
 
 function getAllUsers (req, res) {
     const users = userData.data; // [ {}, {}, {}]
-    const asdsadasda = {
+    const payload = {
         users,
         size: users.length
     }
-    res.status(200).json(asdsadasda);
+    res.status(200).json(payload);
 }
 
 
