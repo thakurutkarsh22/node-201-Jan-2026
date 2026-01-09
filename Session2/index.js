@@ -1,5 +1,6 @@
 const express = require('express');
-const { HomeResponse } = require('./Controller/HomeController');
+const ActivityRouter = require('./Routes/ActivityRoute');
+const HomeRouter = require('./Routes/HomeRoute');
 const PORT = 8089;
 
 const server = express();
@@ -7,17 +8,7 @@ const server = express();
 
 // for home page ONLY get req is allowed
 // this is a HANDLER function - handles the incoming request and sends response
-server.get("/", HomeResponse);
-
-server.get("/home", HomeResponse);
-
-server.get("/abouts", (req, res) => {
-    res.status(200).send("This page is created for learning node js and Fitness using EXPRESS");
-});
-
-server.get("/contact", (req, res) => {
-    res.status(200).send("Phone: 1234567890 \n Contact me at: utkarsh@example.com EXPRESS !!!");
-});
+server.use("/", HomeRouter)
 
 server.get("/fitness", (req, res) => {
     const fitnessInfo = {
@@ -41,6 +32,11 @@ server.get("/fitness", (req, res) => {
     // json is also Stringifying the object
     res.status(200).json(fitnessInfo);
 });
+
+// ACTIVITY 
+// we need to support new functionality 
+// use supports - GET, POST, PUT, DELETE, PATCH
+server.use("/api/v1/users/", ActivityRouter)
 
 
 server.listen(PORT, () => {
