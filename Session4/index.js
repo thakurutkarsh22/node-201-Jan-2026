@@ -1,10 +1,22 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const ActivityRouter = require('./Routes/ActivityRoute');
 const HomeRouter = require('./Routes/HomeRoute');
+const BlogsRouter = require("./Routes/BlogsRouter");
 const PORT = 8089;
 
 const server = express();
 require('dotenv').config()
+
+
+// midlleware that will work for all the paths/endpoints and for any request -> it will work for 
+// every request 
+
+/**
+ * Returns middleware that only parses json and only looks at 
+ * requests where the Content-Type header matches the type option.
+ */
+server.use(express.json());
 
 
 // for home page ONLY get req is allowed
@@ -38,6 +50,16 @@ server.get("/fitness", (req, res, next) => {
 // we need to support new functionality 
 // use supports - GET, POST, PUT, DELETE, PATCH
 server.use("/api/v1/users/", ActivityRouter)
+
+// Blogs 
+server.use("/api/v1/blogs/", BlogsRouter)
+
+
+const uri = "mongodb://localhost:27017/"; // mongoDB server 
+const database = "Crio2026Jan" // databases
+mongoose.connect(uri + database).then(() => {
+    console.log("DB connected successfully")
+})
 
 
 server.listen(PORT, () => {
