@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const ActivityRouter = require('./Routes/ActivityRoute');
 const HomeRouter = require('./Routes/HomeRoute');
 const BlogsRouter = require("./Routes/BlogsRouter");
+const UserRoter = require("./Routes/UserRouter");
 const PORT = 8089;
 
 const server = express();
@@ -53,6 +54,9 @@ server.use("/api/v1/users/", ActivityRouter)
 
 // Blogs 
 server.use("/api/v1/blogs/", BlogsRouter)
+
+// User 
+server.use("/api/v1/user",UserRoter );
 
 
 const uri = "mongodb://localhost:27017/"; // mongoDB server 

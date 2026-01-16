@@ -1,20 +1,11 @@
 const { default: mongoose } = require("mongoose");
 const blogsModel = require("../Models/blogsModel");
+const userModel = require("../Models/userModel");
+const BlogService = require("../Services/BlogService");
 
 async function createBlog(req, res) {
-
-    const { title, content, author } = req.body
-
-
-    // user model 
-
-    const blogsModelObject = blogsModel({title, content, author, nationality: "Indian"});
-
-    // saving to DB 
-
     try {
-        // .save will do the DB call req to DB to save the object (5 sec)
-        const response = await blogsModelObject.save(); 
+        const response = await BlogService.createBlog(req.body)
         res.status(201).json(response);
     } catch (error) {
         res.status(500).json({message: 'something went wrong', error});
