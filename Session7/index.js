@@ -4,3 +4,12 @@
 // tools to debug 
 // 1. console.log
 // 2. vs code debugger 
+
+
+// production tooling: 
+/**
+ * 1. splunk
+ * 2. datadog
+ * 3. newrelic
+ * 
+ */
