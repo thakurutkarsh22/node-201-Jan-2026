@@ -4,7 +4,7 @@ const ActivityRouter = require('./Routes/ActivityRoute');
 const HomeRouter = require('./Routes/HomeRoute');
 const BlogsRouter = require("./Routes/BlogsRouter");
 const UserRoter = require("./Routes/UserRouter");
-const PORT = 8089;
+const PORT = process.env.PORT;
 
 const server = express();
 require('dotenv').config()
@@ -59,7 +59,7 @@ server.use("/api/v1/blogs/", BlogsRouter)
 server.use("/api/v1/user",UserRoter );
 
 
-const uri = "mongodb://localhost:27017/"; // mongoDB server 
+const uri = process.env.MONGO_URL + ""; // mongoDB server 
 const database = "Crio2026Jan" // databases
 mongoose.connect(uri + database).then(() => {
     console.log("DB connected successfully")
@@ -67,5 +67,5 @@ mongoose.connect(uri + database).then(() => {
 
 
 server.listen(PORT, () => {
-  console.log(`Thumbs Up Server is listening on port EXPRESS ${PORT}`);
+  console.log(`Thumbs Up Server is listening on port EXPRESS 8089`);
 });
