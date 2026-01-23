@@ -1,5 +1,7 @@
 const userModel = require("../Models/userModel");
 const bcrypt =  require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require("../Middleware/jwtAuthMiddleware");
 
 class UserService {
 
@@ -49,14 +51,24 @@ class UserService {
             const hashedPasswordFromDB = user.password; // 2$y$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW
 
             const isPasswordValid = await bcrypt.compare(plainTextPasswordFromReq, hashedPasswordFromDB);
+            const tokenPayload = {
+                userId: user._id,
+                email: user.email,
+                name: user.name
+            }
+            let token = "";
             if (!isPasswordValid) {
                 return {
                     status: false,
                     message: "Invalid Password"
                 }
             } else {
+
+                token = jwt.sign(tokenPayload, JWT_SECRET, {expiresIn: '10000'});
+
                 isLoggedIN.status = true;
                 isLoggedIN.user = user;
+                isLoggedIN.token = token;
                 return isLoggedIN;
             }
             
