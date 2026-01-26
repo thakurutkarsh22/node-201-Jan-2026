@@ -1,0 +1,26 @@
+const express = require('express');
+const { getAllUsers, getUserByGender, getUsersByFirstName } = require('../Controller/ActivityUserController');
+const passwordAuthMiddleware = require('../Middleware/passwordAuthMiddleware');
+const { JwtAuthMiddleware } = require('../Middleware/jwtAuthMiddleware');
+const router = express.Router();
+
+
+
+// 1. get all users 
+
+router.get("/getAllUsers", passwordAuthMiddleware, getAllUsers);
+
+
+// 2. get all the users by gender 
+// WAY 1: query PARAMS: 
+//  https://www.google.com/search?q=sehwaga   ? - query PARAMS.   (q is key, sehwaga is value)
+router.get("/getUsersByGender", JwtAuthMiddleware, getUserByGender);
+
+
+// 3. get user by first name
+// WAY 2: URL params  : -> means its url params 
+// https://pokeapi.co/api/v2/pokemon/pikachu | https://pokeapi.co/api/v2/pokemon/ditto 
+router.get("/getUsersByFirstName/:firstName", getUsersByFirstName);
+
+
+module.exports = router;
