@@ -2,6 +2,7 @@ const express = require('express');
 const { getAllUsers, getUserByGender, getUsersByFirstName } = require('../Controller/ActivityUserController');
 const passwordAuthMiddleware = require('../Middleware/passwordAuthMiddleware');
 const { JwtAuthMiddleware } = require('../Middleware/jwtAuthMiddleware');
+const passport =  require('passport');
 const router = express.Router();
 
 
@@ -17,10 +18,15 @@ router.get("/getAllUsers", passwordAuthMiddleware, getAllUsers);
 router.get("/getUsersByGender", JwtAuthMiddleware, getUserByGender);
 
 
-// 3. get user by first name
-// WAY 2: URL params  : -> means its url params 
-// https://pokeapi.co/api/v2/pokemon/pikachu | https://pokeapi.co/api/v2/pokemon/ditto 
-router.get("/getUsersByFirstName/:firstName", getUsersByFirstName);
+
+// passport baseed authentication
+
+const AuthPassportMiddleware = passport.authenticate('jwt', { session: false, failureRedirect: '/' });
+
+
+
+
+router.get("/getUsersByFirstName/:firstName", AuthPassportMiddleware, getUsersByFirstName);
 
 
 module.exports = router;

@@ -4,10 +4,14 @@ const ActivityRouter = require('./Routes/ActivityRoute');
 const HomeRouter = require('./Routes/HomeRoute');
 const BlogsRouter = require("./Routes/BlogsRouter");
 const UserRoter = require("./Routes/UserRouter");
+const passport = require('passport');
+const configPassport = require('./Config/Passport');
 const PORT = process.env.PORT;
 
 const server = express();
 require('dotenv').config()
+
+configPassport(passport);
 
 
 // midlleware that will work for all the paths/endpoints and for any request -> it will work for 
